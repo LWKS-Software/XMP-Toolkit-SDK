@@ -22,7 +22,7 @@ set CleanCMake=OFF
 set XMPROOT=%buildSharedLoc%/../..
 
 :: Default Generator
-set GeneratorVersion=Visual Studio 16 2019
+set GeneratorVersion=Visual Studio 17 2022
 set GeneratorArchitecture=x64
 set CMake_Arch64Bit=ON
 set CMake_ARCH=x64
@@ -39,8 +39,8 @@ set CMake_LibTypeFolderName=dynamic
 :: Parse over argumets using loop and shift
 :Loop
 	if /I "%1"=="" GOTO EndLoop
-	
-	
+
+
 	if /I "%1"=="Clean" (
 	echo "Clean make specified"
 	set CleanCMake=ON
@@ -65,6 +65,12 @@ set CMake_LibTypeFolderName=dynamic
 	set CMakeGenVersion_FolderSuffix=
 	)
 
+	if /I "%1"=="VC17" (
+	echo "Generator VS 2022 specified"
+	set GeneratorVersion=Visual Studio 17 2022
+	set CMakeGenVersion_FolderSuffix=
+	)
+
 	if /I "%1"=="WarningAsError" (
 	echo "sensible warnings activated"
 	set CMake_Build_Warning_As_Error=On
@@ -81,7 +87,7 @@ set CMake_LibTypeFolderName=dynamic
 	set CMake_Arch64Bit=ON
 	set CMake_ARCH=x64
 	)
-	
+
 	shift
 	goto Loop
 
@@ -94,7 +100,7 @@ set CMake64_Folder_Suffix=
 )
 
 :: CMake Folder specified:
-set CMakeFolder="vc16/%CMake_LibTypeFolderName%/windows%CMake64_Folder_Suffix%"
+set CMakeFolder="vc17/%CMake_LibTypeFolderName%/windows%CMake64_Folder_Suffix%"
 echo CMakeFolder: %CMakeFolder%
 
 echo Generator used: %GeneratorVersion%
@@ -107,8 +113,8 @@ if exist %CMakeFolder% rmdir /S /Q %CMakeFolder%
 
 mkdir %CMakeFolder%
 cd %CMakeFolder%
-echo cmake ../../../. -G"%GeneratorVersion%" -A %GeneratorArchitecture% -DXMP_CMAKEFOLDER_NAME="%CMakeFolder%" -DCMAKE_CL_64=%CMake_Arch64Bit% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_WARNING_AS_ERROR=%CMake_Build_Warning_As_Error% -DXMP_BUILD_STATIC="%CMake_BuildStatic%" 
-cmake ../../../. -G"%GeneratorVersion%" -A %GeneratorArchitecture% -DXMP_CMAKEFOLDER_NAME="%CMakeFolder%" -DCMAKE_CL_64=%CMake_Arch64Bit% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_WARNING_AS_ERROR=%CMake_Build_Warning_As_Error% -DXMP_BUILD_STATIC="%CMake_BuildStatic%" 
+echo cmake ../../../. -G"%GeneratorVersion%" -A %GeneratorArchitecture% -DXMP_CMAKEFOLDER_NAME="%CMakeFolder%" -DCMAKE_CL_64=%CMake_Arch64Bit% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_WARNING_AS_ERROR=%CMake_Build_Warning_As_Error% -DXMP_BUILD_STATIC="%CMake_BuildStatic%"
+cmake ../../../. -G"%GeneratorVersion%" -A %GeneratorArchitecture% -DXMP_CMAKEFOLDER_NAME="%CMakeFolder%" -DCMAKE_CL_64=%CMake_Arch64Bit% -DCMAKE_ARCH=%CMake_ARCH% -DXMP_BUILD_WARNING_AS_ERROR=%CMake_Build_Warning_As_Error% -DXMP_BUILD_STATIC="%CMake_BuildStatic%"
 
 if errorlevel 1 goto error
 goto ok
