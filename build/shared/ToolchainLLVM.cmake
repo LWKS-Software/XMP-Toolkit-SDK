@@ -17,5 +17,5 @@ set(CMAKE_CXX_COMPILER xcrun -find clang++)
 
 
 # SDK and deployment 
-set(XMP_OSX_SDK		 	11.1)
-set(XMP_OSX_TARGET	 	10.13)
+#set(XMP_OSX_SDK		 	11.1)
+set(XMP_OSX_TARGET	 	$ENV{MACOSX_DEPLOYMENT_TARGET})

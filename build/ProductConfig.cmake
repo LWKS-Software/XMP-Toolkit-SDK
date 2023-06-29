@@ -48,7 +48,11 @@ if (UNIX)
 			if(NOT DEFINED XMP_OSX_SDK)
 				# no, so default to CS6 settings
 				#set(CMAKE_XCODE_ATTRIBUTE_GCC_VERSION "4.2")
-				set(XMP_OSX_SDK		10.13)
+            # use 'default macosx'
+				#set(XMP_OSX_SDK		10.13)
+			endif()
+
+			if(NOT DEFINED XMP_OSX_TARGET)
 				set(XMP_OSX_TARGET	10.11)
 			endif()
 
